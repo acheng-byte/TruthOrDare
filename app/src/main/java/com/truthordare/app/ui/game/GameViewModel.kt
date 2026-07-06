@@ -92,6 +92,12 @@ class GameViewModel(app: Application) : AndroidViewModel(app) {
 
     fun flipCard() { _isFlipped.value = true }
 
+    fun unlockLibrary(id: Long) = viewModelScope.launch {
+        val libs = libraries.value ?: return@launch
+        val lib = libs.find { it.id == id } ?: return@launch
+        libraryRepo.unlockLibrary(id)
+    }
+
     fun setPlayers(names: List<String>) { playerNames = names }
 
     fun saveCurrentSession(memo: String) {
