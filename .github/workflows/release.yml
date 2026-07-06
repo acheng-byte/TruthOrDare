@@ -41,17 +41,24 @@ jobs:
         id: timestamp
         run: echo "ts=$(date +'%Y%m%d-%H%M')" >> $GITHUB_OUTPUT
 
+      - name: Rename APK
+        run: |
+          cd app/build/outputs/apk/release/
+          APK=$(ls *.apk | head -1)
+          mv "$APK" TruthOrDare-${{ github.ref_name }}.apk
+          echo "APK renamed: $APK -> TruthOrDare-${{ github.ref_name }}.apk"
+
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: TruthOrDare-${{ github.ref_name }}-${{ steps.timestamp.outputs.ts }}
-          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          path: app/build/outputs/apk/release/TruthOrDare-${{ github.ref_name }}.apk
 
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: app/build/outputs/apk/release/app-release-unsigned.apk
+          files: app/build/outputs/apk/release/TruthOrDare-${{ github.ref_name }}.apk
           name: TruthOrDare ${{ github.ref_name }}
           body: |
             ## 真心话大冒险·无限库 ${{ github.ref_name }}
