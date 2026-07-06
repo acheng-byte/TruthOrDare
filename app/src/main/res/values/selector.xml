@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <selector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@color/bottom_nav_selector">
+        <item android:color="@color/secondary" android:state_checked="true" />
+        <item android:color="#666680" />
+    </selector>
+</resources>

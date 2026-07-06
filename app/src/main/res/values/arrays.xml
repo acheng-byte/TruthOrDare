@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="card_types">
+        <item>真心话</item>
+        <item>大冒险</item>
+        <item>道具卡</item>
+    </string-array>
+    <string-array name="card_tags">
+        <item>全部</item>
+        <item>情侣</item>
+        <item>双人</item>
+        <item>多人</item>
+    </string-array>
+</resources>

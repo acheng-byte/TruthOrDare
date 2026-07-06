@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Library selector chips -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择牌库"
+            android:textColor="@color/on_surface"
+            android:textSize="12sp"
+            android:alpha="0.7"
+            android:layout_marginBottom="8dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvLibraries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:clipToPadding="false"
+            android:paddingBottom="4dp" />
+
+        <!-- Tag filter chips -->
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:singleSelection="true"
+            app:selectionRequired="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipAll"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全部"
+                android:checked="true" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipCouple"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="❤️ 情侣" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDuo"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🤪 双人" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipParty"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🎉 多人" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- Level slider -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvLevelLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="最高等级 Lv.3"
+                android:textColor="@color/on_surface"
+                android:textSize="13sp" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderLevel"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:valueFrom="1"
+                android:valueTo="5"
+                android:stepSize="1"
+                android:value="3"
+                app:thumbColor="@color/secondary"
+                app:trackColorActive="@color/secondary"
+                app:trackColorInactive="@color/divider" />
+        </LinearLayout>
+
+        <!-- Card display area -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="20dp">
+
+            <!-- Card back (mystery side) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardBack"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/secondary">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvCardType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="真心话"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:background="#33FFFFFF"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="4dp" />
+
+                    <TextView
+                        android:id="@+id/tvCardContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="点击抽卡"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:paddingHorizontal="24dp"
+                        android:paddingTop="16dp"
+                        android:maxLines="5" />
+
+                    <TextView
+                        android:id="@+id/tvCardLevel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lv.3"
+                        android:textColor="#CCFFFFFF"
+                        android:textSize="14sp"
+                        android:layout_marginTop="12dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card front (question revealed) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardFront"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="12dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="点击查看答案"
+                        android:textColor="@color/hint_text"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
+
+        <!-- Draw button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDraw"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="🎲 抽一张"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            style="@style/ButtonPrimary" />
+
+        <!-- Bottom controls row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnToggleMode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="轮流抽"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textColor="@color/secondary"
+                app:strokeColor="@color/secondary"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvDrawCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="本局 0 次"
+                android:textColor="@color/hint_text"
+                android:textSize="12sp"
+                android:gravity="center" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewHistory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="本局记录"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textColor="@color/truth_color"
+                app:strokeColor="@color/truth_color"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveSession"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="💾 保存本局到历史"
+            android:layout_marginTop="8dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textColor="@color/on_surface"
+            android:alpha="0.7" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
