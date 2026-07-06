@@ -107,11 +107,13 @@ class LibraryFragment : Fragment() {
 
     private fun showLibraryOptions(library: CardLibrary) {
         val options = mutableListOf("重命名", "复制", "设为默认", "导出短码")
+        if (library.isLocked) options.add(0, "解锁")
         if (!library.isDefault) options.add("删除")
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(library.emoji + " " + library.name)
             .setItems(options.toTypedArray()) { _, which ->
                 when (options[which]) {
+                    "解锁" -> { viewModel.unlockLibrary(library.id); com.google.android.material.snackbar.Snackbar.make(binding.root, "${library.name} 已解锁", com.google.android.material.snackbar.Snackbar.LENGTH_SHORT).show() }
                     "重命名" -> showRenameDialog(library)
                     "复制" -> showCopyDialog(library)
                     "设为默认" -> { viewModel.setDefaultLibrary(library.id); Snackbar.make(binding.root, "已设为默认库", Snackbar.LENGTH_SHORT).show() }
@@ -206,10 +208,22 @@ class LibraryFragment : Fragment() {
     }
 
     private fun showShortCodeImportDialog() {
+        val container = android.widget.LinearLayout(requireContext()).apply {
+            orientation = android.widget.LinearLayout.VERTICAL
+            setPadding(48, 16, 48, 0)
+        }
+        val desc = android.widget.TextView(requireContext()).apply {
+            text = "短码是牌库的分享代码。\n将他人导出的短码粘贴到下方，即可把对方的牌库导入到本机。"
+            textSize = 13f
+            setTextColor(context.getColor(com.truthordare.app.R.color.hint_text))
+            setPadding(0, 0, 0, 16)
+        }
         val et = EditText(requireContext()).apply { hint = "粘贴短码" }
+        container.addView(desc)
+        container.addView(et)
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("短码导入")
-            .setView(et)
+            .setView(container)
             .setPositiveButton("导入") { _, _ -> viewModel.importFromShortCode(et.text.toString().trim()) }
             .setNegativeButton("取消", null).show()
     }
