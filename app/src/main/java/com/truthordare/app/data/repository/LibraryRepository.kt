@@ -95,6 +95,11 @@ class LibraryRepository(context: Context) {
         }
     }
 
+    suspend fun unlockLibrary(id: Long) {
+        val lib = libraryDao.getById(id) ?: return
+        libraryDao.update(lib.copy(isLocked = false))
+    }
+
     suspend fun copyLibrary(sourceId: Long, newName: String): Long {
         val source = libraryDao.getById(sourceId) ?: return -1
         val newId = libraryDao.insert(source.copy(id = 0, name = newName, isDefault = false))
