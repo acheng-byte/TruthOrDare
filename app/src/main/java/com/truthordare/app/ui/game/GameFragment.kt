@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.truthordare.app.R
 import com.truthordare.app.data.model.CardTag
+import com.truthordare.app.data.model.CardLibrary
 import com.truthordare.app.databinding.FragmentGameBinding
 import com.truthordare.app.ui.library.LibraryAdapter
 
@@ -38,13 +39,26 @@ class GameFragment : Fragment() {
     }
 
     private fun setupLibraryChips() {
-        libraryAdapter = LibraryChipAdapter { library ->
-            viewModel.selectLibrary(library.id)
-        }
+        libraryAdapter = LibraryChipAdapter(
+            onSelect = { library -> viewModel.selectLibrary(library.id) },
+            onUnlockRequest = { library -> showUnlockDialog(library) }
+        )
         binding.rvLibraries.adapter = libraryAdapter
         viewModel.libraries.observe(viewLifecycleOwner) { libs ->
             libraryAdapter.submitList(libs)
         }
+    }
+
+    private fun showUnlockDialog(library: CardLibrary) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("解锁 ${library.emoji} ${library.name}")
+            .setMessage("该牌库内容较为刺激劲爆，确认后即可使用。")
+            .setPositiveButton("确认解锁") { _, _ ->
+                viewModel.unlockLibrary(library.id)
+                Toast.makeText(requireContext(), "${library.name} 已解锁", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("取消", null)
+            .show()
     }
 
     private fun setupTagChips() {
@@ -87,7 +101,7 @@ class GameFragment : Fragment() {
             }
             binding.tvCardType.text = card.type.label
             binding.tvCardContent.text = card.content
-            binding.tvCardLevel.text = "Lv.${card.level}"
+            binding.tvCardLevel.text = "Lv.\${card.level}"
             binding.cardBack.setCardBackgroundColor(typeColor)
         }
 
@@ -115,7 +129,12 @@ class GameFragment : Fragment() {
         }
 
         viewModel.drawnRecords.observe(viewLifecycleOwner) { records ->
-            binding.tvDrawCount.text = "本局 ${records.size} 次"
+            binding.tvDrawCount.text = "本局 \${records.size} 次"
+        }
+
+        // 同步 chip 选中高亮
+        viewModel.selectedLibraryId.observe(viewLifecycleOwner) { id ->
+            libraryAdapter.setSelected(id)
         }
     }
 
@@ -139,9 +158,9 @@ class GameFragment : Fragment() {
             Toast.makeText(requireContext(), "本局暂无记录", Toast.LENGTH_SHORT).show()
             return
         }
-        val text = records.joinToString("\n") { "• [${it.type}] ${it.content}" }
+        val text = records.joinToString("\n") { "• [\${it.type}] \${it.content}" }
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("本局流水账（${records.size} 条）")
+            .setTitle("本局流水账（\${records.size} 条）")
             .setMessage(text)
             .setPositiveButton("关闭", null)
             .setNeutralButton("清空") { _, _ -> viewModel.clearCurrentSession() }
