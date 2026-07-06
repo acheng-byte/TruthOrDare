@@ -34,13 +34,14 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <com.google.android.material.floatingactionbutton.MiniFloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabNewLibrary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_add"
                 app:backgroundTint="@color/secondary"
-                app:tint="@color/on_secondary" />
+                app:tint="@color/on_secondary"
+                app:fabSize="mini" />
         </LinearLayout>
 
         <TextView
@@ -130,13 +131,14 @@
                 android:textColor="@color/on_surface"
                 android:textSize="14sp" />
 
-            <com.google.android.material.floatingactionbutton.MiniFloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabAddCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_add"
                 app:backgroundTint="@color/truth_color"
-                app:tint="@color/on_primary" />
+                app:tint="@color/on_primary"
+                app:fabSize="mini" />
         </LinearLayout>
 
         <TextView
