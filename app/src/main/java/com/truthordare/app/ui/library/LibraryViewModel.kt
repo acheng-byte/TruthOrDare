@@ -47,6 +47,8 @@ class LibraryViewModel(app: Application) : AndroidViewModel(app) {
 
     fun deleteCard(card: Card) = viewModelScope.launch { repo.deleteCard(card) }
 
+    fun unlockLibrary(id: Long) = viewModelScope.launch { repo.unlockLibrary(id) }
+
     fun importFromCsv(csv: String, libraryName: String) = viewModelScope.launch {
         repo.importFromCsv(csv, libraryName)
     }
