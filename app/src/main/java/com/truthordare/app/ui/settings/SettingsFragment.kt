@@ -34,7 +34,7 @@ class SettingsFragment : Fragment() {
             androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(mode)
         }
 
-        binding.tvVersion.text = "版本 1.0.0"
+        binding.tvVersion.text = "版本 1.0.1"
         binding.tvAbout.text = "真心话大冒险·无限库\n轻量化 · 库管理 · 历史存档"
     }
 
