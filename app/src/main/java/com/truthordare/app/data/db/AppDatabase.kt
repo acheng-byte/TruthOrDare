@@ -91,7 +91,7 @@ abstract class AppDatabase : RoomDatabase() {
                 Card(libraryId = ids[2], type = CardType.DARE, content = "给在场所有人每人说一个优点", level = 1, tag = CardTag.PARTY),
                 Card(libraryId = ids[2], type = CardType.DARE, content = "和在场最高的人比腕力", level = 1, tag = CardTag.PARTY),
                 Card(libraryId = ids[2], type = CardType.PROP, content = "道具牌：全体举杯，喝掉手中饮料的一半！", level = 2, tag = CardTag.PARTY),
-                Card(libraryId = ids[2], type = CardType.PROP, content = "道具牌：顺时针每人说一个"从没做过的事"，撒谎就罚", level = 2, tag = CardTag.PARTY),
+                Card(libraryId = ids[2], type = CardType.PROP, content = "道具牌：顺时针每人说一个\"从没做过的事\"，撒谎就罚", level = 2, tag = CardTag.PARTY),
             )
 
             // 核爆盲盒 cards
