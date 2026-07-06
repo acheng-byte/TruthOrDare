@@ -22,6 +22,8 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // 没有正式 keystore 时用 debug 签名兜底，确保 APK 可安装
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
