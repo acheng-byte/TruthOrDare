@@ -9,7 +9,8 @@ import com.truthordare.app.data.model.CardLibrary
 import com.truthordare.app.databinding.ItemLibraryChipBinding
 
 class LibraryChipAdapter(
-    private val onSelect: (CardLibrary) -> Unit
+    private val onSelect: (CardLibrary) -> Unit,
+    private val onUnlockRequest: (CardLibrary) -> Unit = {}
 ) : ListAdapter<CardLibrary, LibraryChipAdapter.VH>(DIFF) {
 
     private var selectedId: Long = -1L
@@ -26,11 +27,23 @@ class LibraryChipAdapter(
         with(holder.binding) {
             tvEmoji.text = item.emoji
             tvName.text = item.name
-            root.isSelected = item.id == selectedId
-            root.alpha = if (item.isLocked) 0.6f else 1f
+            val isSelected = item.id == selectedId
+            root.isSelected = isSelected
+            root.strokeWidth = if (isSelected) 3 else 1
+            root.setStrokeColor(
+                android.content.res.ColorStateList.valueOf(
+                    if (isSelected)
+                        root.context.getColor(com.truthordare.app.R.color.secondary)
+                    else
+                        root.context.getColor(com.truthordare.app.R.color.divider)
+                )
+            )
+            root.alpha = if (item.isLocked && !isSelected) 0.6f else 1f
+
             root.setOnClickListener {
                 if (item.isLocked) {
-                    // handled in fragment with unlock dialog
+                    onUnlockRequest(item)
+                    return@setOnClickListener
                 }
                 selectedId = item.id
                 notifyDataSetChanged()
